@@ -1,17 +1,38 @@
-import React, { useMemo, } from "react";
+import React, { useEffect, useMemo, useState, } from "react";
 import { processSkipData } from "../utils/skipProcessing";
-import { RAW_SKIP_DATA } from "../Constants/Constants";
+import { fetchSkipData } from "../Constants/Constants";
 import { SkipCard } from "../components/SkipCard";
 import { useNavigationContext } from "../context/NavigationContext";
 import { Sparkles, CheckCircle2, TruckIcon } from "lucide-react";
 
 const ModernSkipHireApp: React.FC = () => {
   const { stepData, updateStepData } = useNavigationContext();
-  
-  const processedSkips = useMemo(() => processSkipData(RAW_SKIP_DATA), []);
-  
+
+  const [rawSkips, setRawSkips] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+
+  useEffect(() => {
+    setLoading(true);
+    fetchSkipData("NR32")
+      .then(data => {
+        setRawSkips(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching skip data:", err);
+        setError("Failed to load skip data");
+        setLoading(false);
+      });
+  }, []);
+
+  const processedSkips = useMemo(() => processSkipData(rawSkips), [rawSkips]);
+
   // Get the currently selected skip from navigation state
   const selectedSkipId = stepData.skipSize?.selectedSkipId || null;
+
+
 
   const handleSelectSkip = (skipId: number) => {
     const skip = processedSkips.find(s => s.id === skipId);
@@ -37,17 +58,17 @@ const ModernSkipHireApp: React.FC = () => {
               <div className="absolute bottom-16 left-1/4 w-16 h-16 bg-violet-300/25 rounded-full animate-pulse"></div>
               <div className="absolute bottom-8 right-8 w-8 h-8 bg-emerald-300/40 rounded-full animate-ping"></div>
             </div>
-            
+
             {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-violet-600/90 to-purple-700/80"></div>
-            
+
             {/* Main Content */}
             <div className="relative px-6 py-16 md:py-20 text-center">
               {/* Icon Badge */}
               <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl border border-white/30 mb-6 animate-bounce">
                 <TruckIcon className="w-8 h-8 text-white" />
               </div>
-              
+
               {/* Main Title */}
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
                 <span className="inline-block animate-fadeIn">Choose Your</span>
@@ -56,13 +77,13 @@ const ModernSkipHireApp: React.FC = () => {
                   Perfect Skip
                 </span>
               </h1>
-              
+
               {/* Subtitle */}
               <p className="text-lg md:text-xl text-violet-100 max-w-3xl mx-auto mb-8 leading-relaxed">
-                Find the ideal skip size for your project with our premium collection. 
+                Find the ideal skip size for your project with our premium collection.
                 <span className="text-emerald-300 font-semibold"> All prices include VAT and delivery to NR32 area.</span>
               </p>
-              
+
               {/* Feature Pills */}
               <div className="flex flex-wrap justify-center gap-3 mb-8">
                 <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
@@ -78,7 +99,7 @@ const ModernSkipHireApp: React.FC = () => {
                   <span className="text-white text-sm font-medium">Same Day Service</span>
                 </div>
               </div>
-              
+
               {/* Call to Action */}
               <a href="#skips" className="inline-block bg-gradient-to-r from-emerald-500 via-50% to-cyan-600 rounded-2xl p-1 shadow-lg hover:shadow-xl transition-all duration-300">
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl px-6 py-3">
@@ -88,7 +109,7 @@ const ModernSkipHireApp: React.FC = () => {
                 </div>
               </a>
             </div>
-            
+
             {/* Bottom Wave */}
             <div className="absolute bottom-0 left-0 right-0">
               <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-12 fill-white">
@@ -98,8 +119,8 @@ const ModernSkipHireApp: React.FC = () => {
           </div>
 
           {/* Content Section */}
-          <div className="px-4 py-4">
-            {/* Skip grid */}
+          {/* <div className="px-4 py-4">
+            {/* Skip grid 
             <div id="skips" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:mx-10">
               {processedSkips.map((skip) => (
                 <SkipCard
@@ -110,11 +131,33 @@ const ModernSkipHireApp: React.FC = () => {
                 />
               ))}
             </div>
+          </div> */}
 
+          {/* Content Section */}
+          <div className="px-4 py-4">
+            {loading && (
+              <div className="text-center text-lg text-gray-500 py-10">Loading skips...</div>
+            )}
+            {error && (
+              <div className="text-center text-red-500 py-10">{error}</div>
+            )}
+            {!loading && !error && (
+              <div id="skips" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:mx-10">
+                {processedSkips.map((skip) => (
+                  <SkipCard
+                    key={skip.id}
+                    skip={skip}
+                    isSelected={Number(selectedSkipId) === skip.id}
+                    onSelect={handleSelectSkip}
+                  />
+                ))}
+              </div>
+            )}
           </div>
+
         </div>
       </main>
-      
+
     </div>
   );
 };

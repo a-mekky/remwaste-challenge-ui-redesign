@@ -1,7 +1,6 @@
-import type { RAW_SKIP_DATA } from "../Constants/Constants";
-import type { Skip } from "../types";
+import type { Skip, RawSkipData } from "../types";
 
-export const processSkipData = (data: typeof RAW_SKIP_DATA): Skip[] => {
+export const processSkipData = (data: RawSkipData[]): Skip[] => {
   return data.map(skip => {
     const totalPrice = Math.round(skip.price_before_vat * (1 + skip.vat / 100));
     return {
