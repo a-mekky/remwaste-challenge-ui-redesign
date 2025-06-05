@@ -118,20 +118,6 @@ const ModernSkipHireApp: React.FC = () => {
             </div>
           </div>
 
-          {/* Content Section */}
-          {/* <div className="px-4 py-4">
-            {/* Skip grid 
-            <div id="skips" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:mx-10">
-              {processedSkips.map((skip) => (
-                <SkipCard
-                  key={skip.id}
-                  skip={skip}
-                  isSelected={Number(selectedSkipId) === skip.id}
-                  onSelect={handleSelectSkip}
-                />
-              ))}
-            </div>
-          </div> */}
 
           {/* Content Section */}
           <div className="px-4 py-4">
