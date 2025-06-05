@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState, } from "react";
 import { processSkipData } from "../utils/skipProcessing";
-import { fetchSkipData } from "../Constants/Constants";
+import { fetchSkipData } from "../Service/getSkipsOptions";
 import { SkipCard } from "../components/SkipCard";
 import { useNavigationContext } from "../context/NavigationContext";
 import { Sparkles, CheckCircle2, TruckIcon } from "lucide-react";

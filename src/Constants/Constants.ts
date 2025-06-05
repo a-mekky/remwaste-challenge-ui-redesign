@@ -11,14 +11,6 @@ export const STEPS: Step[] = [
 ];
 
 
-// Fetch skip data from API
-export const fetchSkipData = async (postcode: string = "NR32", area: string = "Lowestoft") => {
-  // Replace with your actual API endpoint
-  const response = await fetch(`https://app.wewantwaste.co.uk/api/skips/by-location?postcode=${postcode}&area=${area}`);
-  if (!response.ok) throw new Error("Failed to fetch skip data");
-  return response.json();
-};
-
 // Raw data
 // export const RAW_SKIP_DATA = [
 //   { "id": 17933, "size": 4, "hire_period_days": 14, "transport_cost": null, "per_tonne_cost": null, "price_before_vat": 278, "vat": 20, "postcode": "NR32", "area": "", "forbidden": false, "created_at": "2025-04-03T13:51:46.897146", "updated_at": "2025-04-07T13:16:52.813", "allowed_on_road": true, "allows_heavy_waste": true },

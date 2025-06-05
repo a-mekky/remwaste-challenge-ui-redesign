@@ -10,7 +10,7 @@ A fully responsive, TypeScript-based React application for skip hire booking wit
 - **TypeScript Integration**: Fully typed components with strict type checking
 - **Accessibility**: WCAG compliant with keyboard navigation and screen reader support
 - **Modern UI/UX**: Clean design with smooth animations and transitions
-- **Real Data Processing**: Processes JSON data from external sources
+- **Real Data Processing**: Fetches and processes JSON data from an external API
 - **Context-based Navigation**: Multi-step navigation with persistent state
 - **Detail Modals**: Rich skip details with pricing breakdown and feature highlights
 
@@ -39,7 +39,7 @@ This project uses a modular, scalable, and maintainable architecture with the fo
   This enables step validation, persistent state, and easy extension.
 
 - **Data Processing:**  
-  Skip data is processed and normalized via utility functions ([`skipProcessing.ts`](src/utils/skipProcessing.ts)), ensuring consistent data shape and presentation.
+  Skip data is fetched from an external API and normalized via utility functions ([`skipProcessing.ts`](src/utils/skipProcessing.ts)), ensuring consistent data shape and presentation.
 
 - **Step Rendering:**  
   The main workflow is rendered dynamically based on the current step using [`StepRenderer.tsx`](src/components/StepRenderer.tsx).  
@@ -70,7 +70,7 @@ src/
 ├── index.css                # Global and Tailwind styles
 ├── main.tsx                 # Entry point
 ├── Constants/
-│   └── Constants.ts         # Step definitions and raw skip data
+│   └── Constants.ts         # Step definitions and API endpoint
 ├── components/              # Reusable UI components
 │   ├── DetailModal.tsx      # Skip detail modal
 │   ├── Header.tsx           # App header
@@ -171,7 +171,7 @@ npm run preview
 
 ### Data Source
 
-The application processes skip data from a JSON source. Update the `RAW_SKIP_DATA` constant in [`Constants/Constants.ts`](src/Constants/Constants.ts) or configure an external API endpoint.
+The application fetches skip data directly from an external API using the `fetchSkipData` function in [`Service/getSkipsOptions.ts`](src/Service/getSkipsOptions.ts).  
 
 ## 🔄 State Management
 
@@ -183,10 +183,11 @@ The application processes skip data from a JSON source. Update the `RAW_SKIP_DAT
 ## 🎯 Performance Optimizations
 
 - **Memoization**: Preventing unnecessary re-renders
+- **Lazy Loading**: (Planned) Load non-critical components on demand
+- **Image Optimization**: (Planned) Responsive image loading
 
-## 🧑‍💻 Development Enhancments
+## 🧑‍💻 Development Enhancements
 
 - Include tests for new features
-- Lazy loading of non-critical components
-- **Image Optimization**: Responsive image loading
-- Enhance the separation to get these functionality as a standalone module
+- Enhance code separation for standalone modules
+- Continue improving accessibility and performance
