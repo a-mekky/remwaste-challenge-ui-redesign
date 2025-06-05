@@ -23,6 +23,44 @@ A fully responsive, TypeScript-based React application for skip hire booking wit
 - **Lucide React** - Beautiful, customizable icons
 - **ESLint** - Code linting and formatting
 
+## ✅ Implemented Approach
+
+This project uses a modular, scalable, and maintainable architecture with the following key practices:
+
+- **Component-Driven Development:**  
+  All UI elements are built as reusable, focused React functional components (see [`src/components/`](src/components/)).  
+  Example: [`SkipCard.tsx`](src/components/SkipCard.tsx), [`DetailModal.tsx`](src/components/DetailModal.tsx).
+
+- **Type Safety:**  
+  All logic and components are strictly typed using TypeScript. Shared types are centralized in [`src/types/index.ts`](src/types/index.ts).
+
+- **State Management:**  
+  Multi-step navigation and form state are managed using React Context ([`NavigationContext.tsx`](src/context/NavigationContext.tsx)) and custom hooks ([`useNavigation.ts`](src/hooks/useNavigation.ts)).  
+  This enables step validation, persistent state, and easy extension.
+
+- **Data Processing:**  
+  Skip data is processed and normalized via utility functions ([`skipProcessing.ts`](src/utils/skipProcessing.ts)), ensuring consistent data shape and presentation.
+
+- **Step Rendering:**  
+  The main workflow is rendered dynamically based on the current step using [`StepRenderer.tsx`](src/components/StepRenderer.tsx).  
+  Steps are defined in [`Constants/Constants.ts`](src/Constants/Constants.ts) for easy configuration and extension.
+
+- **Styling & Theming:**  
+  Uses Tailwind CSS for utility-first, responsive styling.  
+  Custom gradients, color palettes, and animations are used for a modern UI.
+
+- **Accessibility:**  
+  All interactive elements use semantic HTML, ARIA attributes, and keyboard navigation support.
+
+- **Performance:**  
+  Uses `useMemo` and `useCallback` for memoization.  
+  Plans for lazy loading and image optimization are outlined for future improvements.
+
+- **Demo Mode:**  
+  The app is configured to start at the skip selection step for demonstration.  
+  Unimplemented steps are clearly indicated in the UI.
+
+
 ## 📁 Project Structure
 
 ```
